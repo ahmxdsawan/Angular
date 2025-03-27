@@ -1,0 +1,103 @@
+<nz-layout style="min-height: 100vh;">
+  <!-- Sidebar -->
+  <nz-sider
+    class="sidebarNav"
+    nzCollapsible
+    [(nzCollapsed)]="isCollapsed"
+    (mouseenter)="onSiderMouseEnter()"
+    (mouseleave)="onSiderMouseLeave()"
+    [nzTrigger]="null"
+    [nzWidth]="280"
+    [nzCollapsedWidth]="130"
+    nzTheme="light"
+    style="position: sticky; top: 0; left: 0; height: 100vh;"
+  >
+    <!-- Branding -->
+    <div class="branding">
+      <img src="/assets/images/RE-Favicon.png" alt="Logo" />
+    </div>
+    
+    <!-- Navigation Menu -->
+    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" [nzInlineIndent]="14">
+      <ng-container *ngFor="let item of menuItems">
+        <!-- For items with children -->
+        <ng-container *ngIf="item.children && item.children.length > 0; else noChildren">
+          <ng-container *ngIf="!isCollapsed; else minimizedGroup">
+            <!-- Expanded mode: show static header and children with icon and text -->
+            <li class="menu-group-header">
+              <span>{{ item.title }}</span>
+            </li>
+            <ng-container *ngFor="let child of item.children">
+              <li nz-menu-item 
+                  [nzSelected]="isMenuItemActive(child.route)"
+                  (click)="onMenuClick(child)">
+                <i nz-icon [nzType]="child.icon || 'file-text'"></i>
+                <span>{{ child.name }}</span>
+              </li>
+            </ng-container>
+          </ng-container>
+          <ng-template #minimizedGroup>
+            <!-- Minimized mode: show parent's title (centered) and then children icons -->
+            <li class="menu-group-header collapsed">
+              <span>{{ item.title }}</span>
+            </li>
+            <ng-container *ngFor="let child of item.children">
+              <li nz-menu-item 
+                  [nzSelected]="isMenuItemActive(child.route)"
+                  (click)="onMenuClick(child)">
+                <i nz-icon [nzType]="child.icon || 'file-text'"></i>
+              </li>
+            </ng-container>
+          </ng-template>
+        </ng-container>
+        <!-- For items without children -->
+        <ng-template #noChildren>
+          <li nz-menu-item
+              [nzSelected]="isMenuItemActive(item.route || '')"
+              (click)="item.route && router.navigate([item.route])">
+            <i nz-icon [nzType]="item.icon || 'dashboard'"></i>
+            <span>{{ item.title }}</span>
+          </li>
+        </ng-template>
+      </ng-container>
+    </ul>
+    
+    <!-- (Optional) User Info block can be added here if needed -->
+  </nz-sider>
+  
+  <!-- Main Layout -->
+  <nz-layout>
+    <!-- Header -->
+    <nz-header class="topbar">
+      <!-- Sidebar Toggle on left -->
+      <span
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed">
+      </span>
+      
+      <!-- Right-side header items -->
+      <div class="header-right">
+        <nz-avatar 
+          [nzText]="getUserInitials()" 
+          nzSize="default"
+          style="background-color: #00000098">
+        </nz-avatar>
+        <button 
+          nz-button 
+          nzType="default" 
+          nzGhost 
+          (click)="logout()"
+          style="color: black;">
+          Logout
+        </button>
+      </div>
+    </nz-header>
+    
+    <!-- Content Section -->
+    <nz-content class="main-content">
+      <ng-content></ng-content>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

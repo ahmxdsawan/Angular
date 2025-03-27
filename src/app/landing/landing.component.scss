@@ -1,0 +1,168 @@
+// Variables
+$primary-color: #1890ff; // Changed to blue
+$primary-dark: darken($primary-color, 5%); // Slightly darker for hover states
+$text-dark: #333333; // Added dark text color for white background
+$hover-color: lighten($primary-color, 10%);
+$transition-time: 0.3s;
+$header-height: 64px;
+$sider-width: 105px;
+$border-color: #e8e8e8; // Light gray for borders
+
+// Global styles
+:host {
+  display: block;
+  height: 100%;
+}
+
+// Sider styles
+.ant-layout-sider {
+  background: #ffffff !important; // Changed to white
+  border-right: 1px solid $border-color; // Added border to separate from content
+
+  .logo {
+    height: $header-height;
+    padding: 16px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff; // Changed to white
+    border-bottom: 1px solid $border-color;
+    transition: all 0.2s ease-in-out;
+  
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  // Menu styles
+  .ant-menu {
+    background: #ffffff; // Changed to white
+
+    &-item, &-submenu-title {
+      color: $text-dark; // Changed text color for white background
+      transition: all $transition-time;
+
+      &:hover {
+        color: $primary-color; // Changed to blue
+        background: rgba($primary-color, 0.1); // Light blue background on hover
+      }
+
+      .anticon {
+        font-size: 18px;
+      }
+    }
+
+    &-item-selected {
+      background: rgba($primary-color, 0.1) !important; // Light blue
+      color: $primary-color !important; // Blue text for selected items
+    }
+
+    // Submenu styles
+    &-submenu {
+      &-inline {
+        background: #ffffff; // Changed to white
+      }
+
+      &-title:hover {
+        background: rgba($primary-color, 0.1); // Light blue on hover
+      }
+    }
+
+    // Override default ant-menu-dark colors
+    &.ant-menu-dark {
+      background: #ffffff; // Changed to white
+
+      .ant-menu-sub {
+        background: #ffffff; // Changed to white
+      }
+    }
+  }
+}
+
+// Header styles
+.header {
+  background: #ffffff; // Changed to white
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $header-height;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid $border-color; // Added border
+
+  .trigger {
+    font-size: 20px;
+    color: $text-dark; // Changed to dark text
+    cursor: pointer;
+    transition: color $transition-time;
+    padding: 0 24px;
+
+    &:hover {
+      color: $primary-color; // Changed to blue on hover
+    }
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .ant-avatar {
+      background: $primary-color; // Changed to blue
+      cursor: pointer;
+    }
+
+    .username {
+      color: $text-dark; // Changed to dark text
+      font-weight: 500;
+    }
+
+    .ant-btn {
+      background: transparent;
+      border-color: $primary-color; // Changed to blue
+      color: $primary-color; // Changed text to blue
+      
+      &:hover {
+        background: rgba($primary-color, 0.1); // Light blue on hover
+      }
+    }
+  }
+}
+
+// Content styles
+.main-content {
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: calc(100vh - #{$header-height});
+
+  .welcome-card {
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+
+    .ant-card-head {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 16px 24px;
+    }
+
+    .ant-card-body {
+      padding: 24px;
+    }
+  }
+}
+
+// Footer styles
+.footer {
+  text-align: center;
+  padding: 16px;
+  color: rgba(0, 0, 0, 0.45);
+  background: #fff;
+}
